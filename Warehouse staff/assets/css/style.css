@@ -5,32 +5,12 @@ body{
     padding: 0;
 }
 
-.container{
-    width: 400px;
-    margin: 80px auto;
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+.error{
+    color: red;
 }
 
-h2{
-    margin-bottom: 25px;
-    color: #2c3e50;
-    text-align: center;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"]{
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    border: 1px solid #cfd8dc;
-    border-radius: 5px;
-    background-color: #f9fbfc;
+.success{
+    color: green;
 }
 
 input[type="submit"],
@@ -46,32 +26,4 @@ button{
 input[type="submit"]:hover,
 button:hover{
     background-color: #4c6ef5;
-}
-
-.error{
-    color: red;
-}
-
-.success{
-    color: green;
-}
-
-.sidebar{
-    width: 220px;
-    height: 100vh;
-    background: #dbe4f0;
-    padding: 20px;
-}
-
-.sidebar h2{
-    color: #2c3e50;
-}
-
-.sidebar a{
-    color: #2c3e50;
-    text-decoration: none;
-}
-
-.sidebar a:hover{
-    color: #4c6ef5;
 }

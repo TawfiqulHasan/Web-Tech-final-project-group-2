@@ -13,6 +13,7 @@ if (isset($_SESSION["user_id"])) {
 <head>
     <title>Warehouse Staff Login</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/login.css">
 </head>
 <body>
 

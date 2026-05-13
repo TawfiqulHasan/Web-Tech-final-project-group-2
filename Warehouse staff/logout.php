@@ -10,22 +10,25 @@ session_destroy();
 <html>
 <head>
     <title>Logout</title>
+
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/logout.css">
+
 </head>
 <body>
 
-<div class="container">
+<div class="logout-box">
 
-<h2>You are logged out</h2>
+    <h2>✅ You are logged out</h2>
 
-<p>
-SESSION destroyed.<br>
-Login removed successfully.
-</p>
+    <p>
+        SESSION destroyed.<br>
+        Login removed successfully.
+    </p>
 
-<a href="view/warehouse/login.php">
-    <button>Login Again</button>
-</a>
+    <a href="view/warehouse/login.php">
+        <button>Login Again</button>
+    </a>
 
 </div>
 
