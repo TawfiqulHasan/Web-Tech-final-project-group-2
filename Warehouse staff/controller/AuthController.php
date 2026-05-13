@@ -38,6 +38,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["name"] = $row["name"];
         $_SESSION["role"] = $row["role"];
 
+        // COOKIE = remember email
+        if (isset($_POST["remember"])) {
+
+            setcookie(
+                "remember_email",
+                $email,
+                time() + (86400 * 30),
+                "/"
+            );
+        }
+
         header("Location: ../view/warehouse/dashboard.php");
         exit();
 
