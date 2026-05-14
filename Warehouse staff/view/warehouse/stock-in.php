@@ -58,7 +58,8 @@ $result = $product->getAllProducts();
                     while($row = $result->fetch_assoc()){
                     ?>
                         <option value="<?php echo $row["id"]; ?>">
-                            <?php echo $row["name"]; ?>
+                            <?php echo $row["name"]; ?> 
+                            - Available: <?php echo $row["current_stock"]; ?>
                         </option>
                     <?php
                     }
@@ -69,7 +70,8 @@ $result = $product->getAllProducts();
 
                 <input type="number"
                        name="quantity"
-                       placeholder="Enter quantity">
+                       placeholder="Enter quantity"
+                       min="0">
 
                 <input type="submit" value="Add Stock">
 
