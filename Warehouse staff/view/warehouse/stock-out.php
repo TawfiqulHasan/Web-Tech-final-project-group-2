@@ -30,6 +30,7 @@ $result = $product->getAllProducts();
     <a href="product-search.php">Product Search</a>
     <a href="stock-in.php">Stock In</a>
     <a href="stock-out.php" class="active">Stock Out</a>
+    <a href="transaction-history.php">Transactions</a>
     <a href="../../logout.php">Logout</a>
 
 </div>

@@ -21,6 +21,7 @@ include("includes/auth-check.php");
     <a href="product-search.php" class="active">Product Search</a>
     <a href="stock-in.php">Stock In</a>
     <a href="stock-out.php">Stock Out</a>
+    <a href="transaction-history.php">Transactions</a>
     <a href="../../logout.php">Logout</a>
 </div>
 

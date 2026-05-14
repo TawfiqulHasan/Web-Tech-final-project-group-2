@@ -14,7 +14,15 @@ $lowStockQuery = "SELECT COUNT(*) AS low_stock
                   AND current_stock > 0";
 $lowStockResult = $conn->query($lowStockQuery);
 $lowStock = $lowStockResult->fetch_assoc()['low_stock'];
+/* Recent activity */
+$activityQuery =
+"SELECT stock_transactions.*, products.name AS product_name
+ FROM stock_transactions
+ LEFT JOIN products ON stock_transactions.product_id = products.id
+ ORDER BY stock_transactions.id DESC
+ LIMIT 5";
 
+$activityResult = $conn->query($activityQuery);
 /* Out of stock */
 $outStockQuery = "SELECT COUNT(*) AS out_stock 
                   FROM products 
@@ -42,6 +50,7 @@ $outStock = $outStockResult->fetch_assoc()['out_stock'];
     <a href="product-search.php">Product Search</a>
     <a href="stock-in.php">Stock In</a>
     <a href="stock-out.php">Stock Out</a>
+    <a href="transaction-history.php">Transactions</a>
     <a href="../../logout.php">Logout</a>
 
 </div>
@@ -114,7 +123,31 @@ $outStock = $outStockResult->fetch_assoc()['out_stock'];
 
         <h3>Recent Activity</h3>
 
-        <p>No recent activity yet.</p>
+        <?php
+        if($activityResult->num_rows > 0){
+
+            while($activity = $activityResult->fetch_assoc()){
+        ?>
+
+                <p>
+                    <b><?php echo ucfirst($activity["type"]); ?></b>
+                    -
+                    <?php echo $activity["product_name"]; ?>
+                    |
+                    Quantity:
+                    <?php echo $activity["quantity"]; ?>
+                    |
+                    Date:
+                    <?php echo $activity["transaction_date"]; ?>
+                </p>
+
+        <?php
+            }
+
+        } else {
+            echo "<p>No recent activity yet.</p>";
+        }
+        ?>
 
     </div>
 
