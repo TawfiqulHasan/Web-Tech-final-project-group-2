@@ -47,7 +47,19 @@ $result = $conn->query($sql);
 
     <div class="table-box">
 
-        <table class="stock-table">
+        <div class="table-header">
+
+            <h3>Stock Transactions</h3>
+
+            <input type="text"
+                   class="search-box"
+                   id="transactionSearch"
+                   placeholder="Search transaction..."
+                   onkeyup="filterTransaction()">
+
+        </div>
+
+        <table class="stock-table" id="transactionTable">
 
             <tr>
                 <th>ID</th>
@@ -60,13 +72,31 @@ $result = $conn->query($sql);
 
             <?php
             while($row = $result->fetch_assoc()){
+
+                $typeClass = "";
+
+                if($row["type"] == "in"){
+                    $typeClass = "status-ok";
+                }
+                else if($row["type"] == "out"){
+                    $typeClass = "status-out";
+                }
+                else{
+                    $typeClass = "status-low";
+                }
             ?>
 
             <tr>
                 <td><?php echo $row["id"]; ?></td>
                 <td><?php echo $row["product_name"]; ?></td>
                 <td><?php echo $row["user_name"]; ?></td>
-                <td><?php echo $row["type"]; ?></td>
+
+                <td>
+                    <span class="status <?php echo $typeClass; ?>">
+                        <?php echo ucfirst($row["type"]); ?>
+                    </span>
+                </td>
+
                 <td><?php echo $row["quantity"]; ?></td>
                 <td><?php echo $row["transaction_date"]; ?></td>
             </tr>
@@ -80,6 +110,27 @@ $result = $conn->query($sql);
     </div>
 
 </div>
+
+<script>
+function filterTransaction(){
+
+    let input = document.getElementById("transactionSearch").value.toLowerCase();
+    let table = document.getElementById("transactionTable");
+    let rows = table.getElementsByTagName("tr");
+
+    for(let i = 1; i < rows.length; i++){
+
+        let text = rows[i].innerText.toLowerCase();
+
+        if(text.indexOf(input) > -1){
+            rows[i].style.display = "";
+        }
+        else{
+            rows[i].style.display = "none";
+        }
+    }
+}
+</script>
 
 </body>
 </html>

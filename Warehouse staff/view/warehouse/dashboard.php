@@ -21,6 +21,15 @@ $activityQuery =
  LEFT JOIN products ON stock_transactions.product_id = products.id
  ORDER BY stock_transactions.id DESC
  LIMIT 5";
+/* Total transactions */
+$totalTransactionQuery =
+"SELECT COUNT(*) AS total_transaction FROM stock_transactions";
+
+$totalTransactionResult =
+$conn->query($totalTransactionQuery);
+
+$totalTransaction =
+$totalTransactionResult->fetch_assoc()['total_transaction'];
 
 $activityResult = $conn->query($activityQuery);
 /* Out of stock */
@@ -72,7 +81,7 @@ $outStock = $outStockResult->fetch_assoc()['out_stock'];
 
     <div class="dashboard-cards">
 
-        <div class="card card-good">
+        <div class="card card-transaction">
             <h3>📦 Total Products</h3>
             <p><?php echo $totalProducts; ?></p>
         </div>
@@ -86,6 +95,10 @@ $outStock = $outStockResult->fetch_assoc()['out_stock'];
             <h3>❌ Out of Stock</h3>
             <p><?php echo $outStock; ?></p>
         </div>
+        <div class="card card-good">
+            <h3>📊 Total Transactions</h3>
+            <p><?php echo $totalTransaction; ?></p>
+        </div>
 
     </div>
 
@@ -96,23 +109,33 @@ $outStock = $outStockResult->fetch_assoc()['out_stock'];
         <div class="action-grid">
 
             <a href="stock-list.php" class="action-btn stock-view">
-                📦 <b>View Stock</b>
+                <div class="action-icon">📦</div>
+                <b>View Stock</b>
                 <span>Check all products</span>
             </a>
 
             <a href="product-search.php" class="action-btn search-product">
-                🔍 <b>Search Product</b>
+                <div class="action-icon">🔍</div>
+                <b>Search Product</b>
                 <span>Find product quickly</span>
             </a>
 
             <a href="stock-in.php" class="action-btn stock-in">
-                ➕ <b>Stock In</b>
+                <div class="action-icon">➕</div>
+                <b>Stock In</b>
                 <span>Add new stock</span>
             </a>
 
             <a href="stock-out.php" class="action-btn stock-out">
-                ➖ <b>Stock Out</b>
+                <div class="action-icon">➖</div>
+                <b>Stock Out</b>
                 <span>Remove stock item</span>
+            </a>
+
+            <a href="transaction-history.php" class="action-btn transaction-btn">
+                <div class="action-icon">📑</div>
+                <b>Transactions</b>
+                <span>View stock history</span>
             </a>
 
         </div>

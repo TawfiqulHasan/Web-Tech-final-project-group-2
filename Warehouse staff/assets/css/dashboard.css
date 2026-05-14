@@ -77,7 +77,7 @@ body{
 /* Dashboard Cards */
 .dashboard-cards{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 22px;
 }
 
@@ -134,30 +134,35 @@ body{
 
 .action-grid{
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 220px);
     gap: 18px;
     margin-top: 18px;
 }
+.quick-actions{
+    overflow-x: auto;
+}
 
 .action-btn{
-    min-height: 110px;
+    min-height: 115px;
     padding: 18px;
     border-radius: 12px;
     color: white;
     text-decoration: none;
     transition: 0.3s;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.action-icon{
+    font-size: 24px;
+    margin-bottom: 10px;
 }
 
 .action-btn b{
-    font-size: 19px;
+    font-size: 18px;
     font-weight: bold;
-    display: inline-block;
-    margin-left: 8px;
-    vertical-align: middle;
-}
-.action-btn{
-    font-size: 22px;
+    display: block;
 }
 
 .action-btn span{
@@ -165,6 +170,26 @@ body{
     margin-top: 6px;
     font-size: 13px;
     opacity: 0.9;
+}
+
+.stock-view{
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+
+.search-product{
+    background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+}
+
+.stock-in{
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+}
+
+.stock-out{
+    background: linear-gradient(135deg, #dc2626, #ef4444);
+}
+
+.transaction-btn{
+    background: linear-gradient(135deg, #0f766e, #14b8a6) !important;
 }
 
 .action-btn:hover{
@@ -240,4 +265,37 @@ body{
     .action-grid{
         grid-template-columns: 1fr;
     }
+}
+.transaction-btn{
+    background: linear-gradient(135deg, #0f766e, #14b8a6);
+}
+.card-transaction{
+    border-left: 6px solid #14b8a6;
+}
+.transaction-btn{
+    background: linear-gradient(135deg, #0f766e, #14b8a6);
+}
+
+.action-icon{
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.action-btn b{
+    display: block;
+    margin-left: 0;
+    margin-top: 5px;
+}
+.quick-actions .action-grid{
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 18px !important;
+}
+
+.quick-actions .action-btn{
+    width: 100% !important;
+}
+
+.quick-actions .transaction-btn{
+    background: linear-gradient(135deg, #0f766e, #14b8a6) !important;
 }
