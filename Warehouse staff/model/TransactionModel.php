@@ -5,7 +5,7 @@ include_once(__DIR__ . "/../config/db.php");
 class TransactionModel {
 
     // stock in
-    public function stockIn($product_id, $quantity, $user_id){
+    public function stockIn($product_id, $quantity, $unit_price, $po_id, $transaction_date, $user_id){
 
         global $conn;
 
@@ -16,17 +16,21 @@ class TransactionModel {
 
         $conn->query($sql);
 
+        if(empty($po_id)){
+            $po_id = "NULL";
+        }
+
         $transactionSql =
         "INSERT INTO stock_transactions
-        (product_id, user_id, type, quantity, transaction_date)
+        (product_id, user_id, type, quantity, unit_price, po_id, transaction_date)
         VALUES
-        ('$product_id', '$user_id', 'in', '$quantity', NOW())";
+        ('$product_id', '$user_id', 'in', '$quantity', '$unit_price', $po_id, '$transaction_date')";
 
         return $conn->query($transactionSql);
     }
 
     // stock out
-    public function stockOut($product_id, $quantity, $user_id){
+    public function stockOut($product_id, $quantity, $reason, $transaction_date, $user_id){
 
         global $conn;
 
@@ -49,9 +53,9 @@ class TransactionModel {
 
         $transactionSql =
         "INSERT INTO stock_transactions
-        (product_id, user_id, type, quantity, transaction_date)
+        (product_id, user_id, type, quantity, reason, transaction_date)
         VALUES
-        ('$product_id', '$user_id', 'out', '$quantity', NOW())";
+        ('$product_id', '$user_id', 'out', '$quantity', '$reason', '$transaction_date')";
 
         return $conn->query($transactionSql);
     }
@@ -69,7 +73,6 @@ class TransactionModel {
 
         $finalStock = $row["current_stock"] + $adjust_quantity;
 
-        // prevent final stock from becoming negative
         if($finalStock < 0){
             return "negative_stock";
         }
@@ -87,7 +90,15 @@ class TransactionModel {
         VALUES
         ('$product_id', '$user_id', 'adjustment', '$adjust_quantity', '$reason', NOW())";
 
-        return $conn->query($transactionSql);
+        $conn->query($transactionSql);
+
+        $logSql =
+        "INSERT INTO activity_logs
+        (user_id, action_type, entity, entity_id, description)
+        VALUES
+        ('$user_id', 'stock_adjustment', 'products', '$product_id', '$reason')";
+
+        return $conn->query($logSql);
     }
 }
 

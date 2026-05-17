@@ -40,7 +40,7 @@ $result = $product->getAllProducts();
     <div class="topbar">
         <div>
             <h2>Stock In</h2>
-            <p>Add product stock</p>
+            <p>Add product stock with price and reference</p>
         </div>
     </div>
 
@@ -59,7 +59,7 @@ $result = $product->getAllProducts();
                     while($row = $result->fetch_assoc()){
                     ?>
                         <option value="<?php echo $row["id"]; ?>">
-                            <?php echo $row["name"]; ?> 
+                            <?php echo $row["name"]; ?>
                             - Available: <?php echo $row["current_stock"]; ?>
                         </option>
                     <?php
@@ -72,7 +72,28 @@ $result = $product->getAllProducts();
                 <input type="number"
                        name="quantity"
                        placeholder="Enter quantity"
-                       min="0">
+                       min="1">
+
+                <label>Unit Price</label>
+
+                <input type="number"
+                       name="unit_price"
+                       placeholder="Enter unit price"
+                       min="0"
+                       step="0.01">
+
+                <label>Purchase Order ID</label>
+
+                <input type="number"
+                       name="po_id"
+                       placeholder="Enter PO ID if available"
+                       min="1">
+
+                <label>Transaction Date</label>
+
+                <input type="date"
+                       name="transaction_date"
+                       value="<?php echo date('Y-m-d'); ?>">
 
                 <input type="submit" value="Add Stock">
 

@@ -54,10 +54,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // STOCK OUT
     else if (isset($_POST["stock_out"])) {
 
-        if (empty($product_id) || empty($quantity)) {
+        $reason = trim($_POST["reason"]);
+        $transaction_date = trim($_POST["transaction_date"]);
+
+        if (empty($product_id) || empty($quantity) || empty($reason) || empty($transaction_date)) {
 
             $_SESSION["success"] = "";
-            $_SESSION["error"] = "All fields are required";
+            $_SESSION["error"] = "Product, quantity, reason and date are required";
 
             header("Location: ../view/warehouse/stock-out.php");
             exit();
@@ -65,7 +68,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $transaction = new TransactionModel();
 
-        $result = $transaction->stockOut($product_id, $quantity, $_SESSION["user_id"]);
+        $result = $transaction->stockOut(
+            $product_id,
+            $quantity,
+            $reason,
+            $transaction_date,
+            $_SESSION["user_id"]
+        );
 
         if ($result == "not_enough_stock") {
 
@@ -90,10 +99,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // STOCK IN
     else {
 
-        if (empty($product_id) || empty($quantity)) {
+        $unit_price = trim($_POST["unit_price"]);
+        $po_id = trim($_POST["po_id"]);
+        $transaction_date = trim($_POST["transaction_date"]);
+
+        if (empty($product_id) || empty($quantity) || empty($unit_price) || empty($transaction_date)) {
 
             $_SESSION["success"] = "";
-            $_SESSION["error"] = "All fields are required";
+            $_SESSION["error"] = "Product, quantity, unit price and date are required";
 
             header("Location: ../view/warehouse/stock-in.php");
             exit();
@@ -101,7 +114,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $transaction = new TransactionModel();
 
-        $result = $transaction->stockIn($product_id, $quantity, $_SESSION["user_id"]);
+        $result = $transaction->stockIn(
+            $product_id,
+            $quantity,
+            $unit_price,
+            $po_id,
+            $transaction_date,
+            $_SESSION["user_id"]
+        );
 
         if ($result) {
 

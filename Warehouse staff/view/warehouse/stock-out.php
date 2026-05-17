@@ -30,6 +30,7 @@ $result = $product->getAllProducts();
     <a href="product-search.php">Product Search</a>
     <a href="stock-in.php">Stock In</a>
     <a href="stock-out.php" class="active">Stock Out</a>
+    <a href="stock-adjustment.php">Stock Adjustment</a>
     <a href="transaction-history.php">Transactions</a>
     <a href="../../logout.php">Logout</a>
 
@@ -40,7 +41,7 @@ $result = $product->getAllProducts();
     <div class="topbar">
         <div>
             <h2>Stock Out</h2>
-            <p>Remove product stock</p>
+            <p>Remove stock with reason and date</p>
         </div>
     </div>
 
@@ -55,18 +56,25 @@ $result = $product->getAllProducts();
                 <label>Product</label>
 
                 <select name="product_id">
+
                     <option value="">Select Product</option>
 
                     <?php
                     while($row = $result->fetch_assoc()){
                     ?>
+
                         <option value="<?php echo $row["id"]; ?>">
-                            <?php echo $row["name"]; ?> 
-                            - Available: <?php echo $row["current_stock"]; ?>
+
+                            <?php echo $row["name"]; ?>
+                            - Available:
+                            <?php echo $row["current_stock"]; ?>
+
                         </option>
+
                     <?php
                     }
                     ?>
+
                 </select>
 
                 <label>Quantity</label>
@@ -74,20 +82,51 @@ $result = $product->getAllProducts();
                 <input type="number"
                        name="quantity"
                        placeholder="Enter quantity"
-                       min="0">
+                       min="1">
 
-                <input type="submit" value="Remove Stock">
+                <label>Reason</label>
+
+                <select name="reason">
+
+                    <option value="">Select Reason</option>
+
+                    <option value="sale">Sale</option>
+
+                    <option value="usage">Usage</option>
+
+                    <option value="damage">Damage</option>
+
+                    <option value="dispatch">Dispatch</option>
+
+                </select>
+
+                <label>Transaction Date</label>
+
+                <input type="date"
+                       name="transaction_date"
+                       value="<?php echo date('Y-m-d'); ?>">
+
+                <input type="submit"
+                       value="Remove Stock">
 
             </form>
 
             <?php
             if (!empty($_SESSION["success"])) {
-                echo "<p class='success'>" . $_SESSION["success"] . "</p>";
+
+                echo "<p class='success'>"
+                . $_SESSION["success"] .
+                "</p>";
+
                 unset($_SESSION["success"]);
             }
 
             if (!empty($_SESSION["error"])) {
-                echo "<p class='error'>" . $_SESSION["error"] . "</p>";
+
+                echo "<p class='error'>"
+                . $_SESSION["error"] .
+                "</p>";
+
                 unset($_SESSION["error"]);
             }
             ?>
