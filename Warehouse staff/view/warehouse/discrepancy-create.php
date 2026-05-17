@@ -29,9 +29,9 @@ $result = $product->getAllProducts();
     <a href="stock-in.php">Stock In</a>
     <a href="stock-out.php">Stock Out</a>
     <a href="stock-adjustment.php">Stock Adjustment</a>
+    <a href="receive-po.php">Receive PO</a>
     <a href="transaction-history.php">Transactions</a>
     <a href="discrepancy-create.php" class="active">Report Discrepancy</a>
-    <a href="my-discrepancy-reports.php" >My Reports</a>
     <a href="../../logout.php">Logout</a>
 
 </div>
@@ -43,13 +43,26 @@ $result = $product->getAllProducts();
             <h2>Report Discrepancy</h2>
             <p>Submit stock count mismatch, damage, theft, or counting issue</p>
         </div>
+        <div class="topbar-right">
+        <a href="my-discrepancy-reports.php" class="topbar-link">
+            📝 My Report
+        </a>
+
+        <a href="profile.php" class="topbar-link">
+            👤 My Profile
+        </a>
+
+        <span class="topbar-date">
+            <?php echo date("d M Y"); ?>
+        </span>
+    </div>
     </div>
 
     <div class="form-center">
 
         <div class="form-box">
 
-            <form method="post" action="../../controller/DiscrepancyController.php">
+            <form method="post" action="../../controller/DiscrepancyController.php" onsubmit="return validateDiscrepancy()">
 
                 <label>Product</label>
 

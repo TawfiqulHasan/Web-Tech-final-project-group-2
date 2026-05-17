@@ -14,13 +14,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $reason = trim($_POST["reason"]);
 
         if (empty($product_id) || empty($quantity) || empty($reason)) {
-
-            $_SESSION["success"] = "";
             $_SESSION["error"] = "Product, quantity and reason are required";
-
             header("Location: ../view/warehouse/stock-adjustment.php");
             exit();
         }
+
+        if (!is_numeric($quantity)) {
+            $_SESSION["error"] = "Quantity must be a number";
+            header("Location: ../view/warehouse/stock-adjustment.php");
+            exit();
+        }
+
+        if (!preg_match("/^-?[0-9]+$/", $quantity)) {
+            $_SESSION["error"] = "Quantity must be a valid whole number";
+            header("Location: ../view/warehouse/stock-adjustment.php");
+            exit();
+        }
+
+        $reason = htmlspecialchars($reason);
 
         $transaction = new TransactionModel();
 
@@ -32,18 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         );
 
         if ($result == "negative_stock") {
-
-            $_SESSION["success"] = "";
             $_SESSION["error"] = "Final stock cannot become negative";
-
         } else if ($result) {
-
-            $_SESSION["error"] = "";
             $_SESSION["success"] = "Stock adjusted successfully";
-
         } else {
-
-            $_SESSION["success"] = "";
             $_SESSION["error"] = "Stock adjustment failed";
         }
 
@@ -58,13 +61,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $transaction_date = trim($_POST["transaction_date"]);
 
         if (empty($product_id) || empty($quantity) || empty($reason) || empty($transaction_date)) {
-
-            $_SESSION["success"] = "";
             $_SESSION["error"] = "Product, quantity, reason and date are required";
-
             header("Location: ../view/warehouse/stock-out.php");
             exit();
         }
+
+        if (!is_numeric($quantity)) {
+            $_SESSION["error"] = "Quantity must be a number";
+            header("Location: ../view/warehouse/stock-out.php");
+            exit();
+        }
+
+        if ($quantity <= 0) {
+            $_SESSION["error"] = "Quantity must be greater than 0";
+            header("Location: ../view/warehouse/stock-out.php");
+            exit();
+        }
+
+        $reason = htmlspecialchars($reason);
 
         $transaction = new TransactionModel();
 
@@ -77,18 +91,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         );
 
         if ($result == "not_enough_stock") {
-
-            $_SESSION["success"] = "";
             $_SESSION["error"] = "Not enough stock available";
-
         } else if ($result) {
-
-            $_SESSION["error"] = "";
             $_SESSION["success"] = "Stock removed successfully";
-
         } else {
-
-            $_SESSION["success"] = "";
             $_SESSION["error"] = "Stock out failed";
         }
 
@@ -104,10 +110,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $transaction_date = trim($_POST["transaction_date"]);
 
         if (empty($product_id) || empty($quantity) || empty($unit_price) || empty($transaction_date)) {
-
-            $_SESSION["success"] = "";
             $_SESSION["error"] = "Product, quantity, unit price and date are required";
+            header("Location: ../view/warehouse/stock-in.php");
+            exit();
+        }
 
+        if (!is_numeric($quantity) || !is_numeric($unit_price)) {
+            $_SESSION["error"] = "Quantity and unit price must be numbers";
+            header("Location: ../view/warehouse/stock-in.php");
+            exit();
+        }
+
+        if ($quantity <= 0 || $unit_price < 0) {
+            $_SESSION["error"] = "Quantity must be greater than 0 and unit price cannot be negative";
             header("Location: ../view/warehouse/stock-in.php");
             exit();
         }
@@ -124,13 +139,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         );
 
         if ($result) {
-
-            $_SESSION["error"] = "";
             $_SESSION["success"] = "Stock added successfully";
-
         } else {
-
-            $_SESSION["success"] = "";
             $_SESSION["error"] = "Stock update failed";
         }
 

@@ -34,9 +34,9 @@ $result = $conn->query($sql);
     <a href="stock-in.php">Stock In</a>
     <a href="stock-out.php">Stock Out</a>
     <a href="stock-adjustment.php">Stock Adjustment</a>
+    <a href="receive-po.php">Receive PO</a>
     <a href="transaction-history.php">Transactions</a>
     <a href="discrepancy-create.php">Report Discrepancy</a>
-    <a href="my-discrepancy-reports.php" class="active">My Reports</a>
     <a href="../../logout.php">Logout</a>
 
 </div>
@@ -47,6 +47,17 @@ $result = $conn->query($sql);
         <div>
             <h2>My Discrepancy Reports</h2>
             <p>View your submitted stock discrepancy reports</p>
+        </div>
+        <div class="topbar-right">
+            <a href="my-discrepancy-reports.php" class="topbar-link">
+                📝 My Reports
+            </a>
+            <a href="profile.php" class="topbar-link">
+                👤 My Profile
+            </a>
+            <span class="topbar-date">
+                <?php echo date("d M Y"); ?>
+            </span>
         </div>
     </div>
 

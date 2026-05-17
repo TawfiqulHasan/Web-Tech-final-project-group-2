@@ -11,12 +11,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = trim($_POST["description"]);
 
     if (empty($product_id) || empty($expected_qty) || empty($actual_qty) || empty($description)) {
-
         $_SESSION["error"] = "All fields are required";
-
         header("Location: ../view/warehouse/discrepancy-create.php");
         exit();
     }
+
+    if (!is_numeric($expected_qty) || !is_numeric($actual_qty)) {
+        $_SESSION["error"] = "Expected and actual quantity must be numbers";
+        header("Location: ../view/warehouse/discrepancy-create.php");
+        exit();
+    }
+
+    if ($expected_qty < 0 || $actual_qty < 0) {
+        $_SESSION["error"] = "Quantity cannot be negative";
+        header("Location: ../view/warehouse/discrepancy-create.php");
+        exit();
+    }
+
+    $description = htmlspecialchars($description);
 
     $report = new DiscrepancyModel();
 

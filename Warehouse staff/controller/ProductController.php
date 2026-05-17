@@ -7,6 +7,8 @@ $product = new ProductModel();
 /* AJAX Search */
 if (isset($_GET["search"])) {
 
+    header("Content-Type: application/json");
+
     $keyword = $_GET["search"];
 
     $result = $product->searchProduct($keyword);
