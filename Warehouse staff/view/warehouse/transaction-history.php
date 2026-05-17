@@ -2,13 +2,45 @@
 include("includes/auth-check.php");
 include("../../config/db.php");
 
+/* Filters */
+$productFilter = $_GET["product"] ?? "";
+$typeFilter = $_GET["type"] ?? "";
+$fromDate = $_GET["from_date"] ?? "";
+$toDate = $_GET["to_date"] ?? "";
+
+/* Main query */
 $sql = "SELECT stock_transactions.*, products.name AS product_name, users.name AS user_name
         FROM stock_transactions
         LEFT JOIN products ON stock_transactions.product_id = products.id
         LEFT JOIN users ON stock_transactions.user_id = users.id
-        ORDER BY stock_transactions.id DESC";
+        WHERE 1=1";
+
+/* Product filter */
+if($productFilter != ""){
+    $sql .= " AND stock_transactions.product_id='$productFilter'";
+}
+
+/* Type filter */
+if($typeFilter != ""){
+    $sql .= " AND stock_transactions.type='$typeFilter'";
+}
+
+/* Date filter */
+if($fromDate != ""){
+    $sql .= " AND DATE(stock_transactions.transaction_date) >= '$fromDate'";
+}
+
+if($toDate != ""){
+    $sql .= " AND DATE(stock_transactions.transaction_date) <= '$toDate'";
+}
+
+$sql .= " ORDER BY stock_transactions.id DESC";
 
 $result = $conn->query($sql);
+
+/* Product dropdown */
+$productSql = "SELECT id, name FROM products";
+$productResult = $conn->query($productSql);
 ?>
 
 <!DOCTYPE html>
@@ -31,6 +63,7 @@ $result = $conn->query($sql);
     <a href="product-search.php">Product Search</a>
     <a href="stock-in.php">Stock In</a>
     <a href="stock-out.php">Stock Out</a>
+    <a href="stock-adjustment.php">Stock Adjustment</a>
     <a href="transaction-history.php" class="active">Transactions</a>
     <a href="../../logout.php">Logout</a>
 
@@ -41,7 +74,7 @@ $result = $conn->query($sql);
     <div class="topbar">
         <div>
             <h2>Transaction History</h2>
-            <p>All stock in and stock out records</p>
+            <p>Filter stock in, stock out and adjustment records</p>
         </div>
     </div>
 
@@ -58,6 +91,98 @@ $result = $conn->query($sql);
                    onkeyup="filterTransaction()">
 
         </div>
+
+<form method="get" class="filter-form">
+
+    <div class="filter-group">
+
+        <label>Product:</label>
+
+        <select name="product">
+
+            <option value="">All Products:</option>
+
+            <?php
+            while($product = $productResult->fetch_assoc()){
+            ?>
+                <option value="<?php echo $product["id"]; ?>"
+                <?php if($productFilter == $product["id"]){ echo "selected"; } ?>>
+
+                    <?php echo $product["name"]; ?>
+
+                </option>
+            <?php
+            }
+            ?>
+
+        </select>
+
+    </div>
+
+    <div class="filter-group">
+
+        <label>Transaction Type:</label>
+
+        <select name="type">
+
+            <option value="">All Types</option>
+
+            <option value="in"
+            <?php if($typeFilter == "in"){ echo "selected"; } ?>>
+                Stock In
+            </option>
+
+            <option value="out"
+            <?php if($typeFilter == "out"){ echo "selected"; } ?>>
+                Stock Out
+            </option>
+
+            <option value="adjustment"
+            <?php if($typeFilter == "adjustment"){ echo "selected"; } ?>>
+                Adjustment
+            </option>
+
+        </select>
+
+    </div>
+
+    <div class="filter-group">
+
+        <label>From Date:</label>
+
+        <input type="date"
+               name="from_date"
+               value="<?php echo $fromDate; ?>">
+
+    </div>
+
+    <div class="filter-group">
+
+        <label>To Date:</label>
+
+        <input type="date"
+               name="to_date"
+               value="<?php echo $toDate; ?>">
+
+    </div>
+
+    <div class="filter-btns">
+
+        <button type="submit">
+            Filter
+        </button>
+
+        <a href="transaction-history.php">
+
+            <button type="button">
+                Reset
+            </button>
+
+        </a>
+
+    </div>
+
+</form>
 
         <table class="stock-table" id="transactionTable">
 

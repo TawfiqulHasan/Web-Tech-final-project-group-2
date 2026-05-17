@@ -9,73 +9,86 @@ class TransactionModel {
 
         global $conn;
 
-        // update product stock
         $sql =
         "UPDATE products
-         SET current_stock =
-         current_stock + '$quantity'
+         SET current_stock = current_stock + '$quantity'
          WHERE id='$product_id'";
 
         $conn->query($sql);
 
-        // save transaction
         $transactionSql =
         "INSERT INTO stock_transactions
         (product_id, user_id, type, quantity, transaction_date)
-
         VALUES
-        ('$product_id',
-         '$user_id',
-         'in',
-         '$quantity',
-         NOW())";
+        ('$product_id', '$user_id', 'in', '$quantity', NOW())";
 
         return $conn->query($transactionSql);
     }
+
     // stock out
-public function stockOut($product_id, $quantity, $user_id){
+    public function stockOut($product_id, $quantity, $user_id){
 
-    global $conn;
+        global $conn;
 
-    // get current stock
-    $checkSql =
-    "SELECT current_stock
-     FROM products
-     WHERE id='$product_id'";
+        $checkSql =
+        "SELECT current_stock FROM products WHERE id='$product_id'";
 
-    $result = $conn->query($checkSql);
+        $result = $conn->query($checkSql);
+        $row = $result->fetch_assoc();
 
-    $row = $result->fetch_assoc();
+        if($row["current_stock"] < $quantity){
+            return "not_enough_stock";
+        }
 
-    // prevent negative stock
-    if($row["current_stock"] < $quantity){
+        $sql =
+        "UPDATE products
+         SET current_stock = current_stock - '$quantity'
+         WHERE id='$product_id'";
 
-        return "not_enough_stock";
+        $conn->query($sql);
+
+        $transactionSql =
+        "INSERT INTO stock_transactions
+        (product_id, user_id, type, quantity, transaction_date)
+        VALUES
+        ('$product_id', '$user_id', 'out', '$quantity', NOW())";
+
+        return $conn->query($transactionSql);
     }
 
-    // reduce stock
-    $sql =
-    "UPDATE products
-     SET current_stock =
-     current_stock - '$quantity'
-     WHERE id='$product_id'";
+    // stock adjustment
+    public function stockAdjustment($product_id, $adjust_quantity, $reason, $user_id){
 
-    $conn->query($sql);
+        global $conn;
 
-    // save transaction
-    $transactionSql =
-    "INSERT INTO stock_transactions
-    (product_id, user_id, type, quantity, transaction_date)
+        $checkSql =
+        "SELECT current_stock FROM products WHERE id='$product_id'";
 
-    VALUES
-    ('$product_id',
-     '$user_id',
-     'out',
-     '$quantity',
-     NOW())";
+        $result = $conn->query($checkSql);
+        $row = $result->fetch_assoc();
 
-    return $conn->query($transactionSql);
-}
+        $finalStock = $row["current_stock"] + $adjust_quantity;
+
+        // prevent final stock from becoming negative
+        if($finalStock < 0){
+            return "negative_stock";
+        }
+
+        $sql =
+        "UPDATE products
+         SET current_stock = '$finalStock'
+         WHERE id='$product_id'";
+
+        $conn->query($sql);
+
+        $transactionSql =
+        "INSERT INTO stock_transactions
+        (product_id, user_id, type, quantity, reason, transaction_date)
+        VALUES
+        ('$product_id', '$user_id', 'adjustment', '$adjust_quantity', '$reason', NOW())";
+
+        return $conn->query($transactionSql);
+    }
 }
 
 ?>

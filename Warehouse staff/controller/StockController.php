@@ -8,8 +8,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $product_id = trim($_POST["product_id"]);
     $quantity = trim($_POST["quantity"]);
 
+    // STOCK ADJUSTMENT
+    if (isset($_POST["stock_adjustment"])) {
+
+        $reason = trim($_POST["reason"]);
+
+        if (empty($product_id) || empty($quantity) || empty($reason)) {
+
+            $_SESSION["success"] = "";
+            $_SESSION["error"] = "Product, quantity and reason are required";
+
+            header("Location: ../view/warehouse/stock-adjustment.php");
+            exit();
+        }
+
+        $transaction = new TransactionModel();
+
+        $result = $transaction->stockAdjustment(
+            $product_id,
+            $quantity,
+            $reason,
+            $_SESSION["user_id"]
+        );
+
+        if ($result == "negative_stock") {
+
+            $_SESSION["success"] = "";
+            $_SESSION["error"] = "Final stock cannot become negative";
+
+        } else if ($result) {
+
+            $_SESSION["error"] = "";
+            $_SESSION["success"] = "Stock adjusted successfully";
+
+        } else {
+
+            $_SESSION["success"] = "";
+            $_SESSION["error"] = "Stock adjustment failed";
+        }
+
+        header("Location: ../view/warehouse/stock-adjustment.php");
+        exit();
+    }
+
     // STOCK OUT
-    if (isset($_POST["stock_out"])) {
+    else if (isset($_POST["stock_out"])) {
 
         if (empty($product_id) || empty($quantity)) {
 
