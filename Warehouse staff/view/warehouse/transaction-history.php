@@ -65,6 +65,7 @@ $productResult = $conn->query($productSql);
     <a href="stock-out.php">Stock Out</a>
     <a href="stock-adjustment.php">Stock Adjustment</a>
     <a href="transaction-history.php" class="active">Transactions</a>
+    <a href="discrepancy-create.php" >Report Discrepancy</a>
     <a href="../../logout.php">Logout</a>
 
 </div>

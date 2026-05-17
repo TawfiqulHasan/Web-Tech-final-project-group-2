@@ -30,6 +30,7 @@ $result = $product->getAllProducts();
     <a href="stock-out.php">Stock Out</a>
     <a href="stock-adjustment.php" class="active">Stock Adjustment</a>
     <a href="transaction-history.php">Transactions</a>
+    <a href="discrepancy-create.php" >Report Discrepancy</a>
     <a href="../../logout.php">Logout</a>
 
 </div>

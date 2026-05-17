@@ -54,12 +54,15 @@ $outStock = $outStockResult->fetch_assoc()['out_stock'];
 
     <h2>Warehouse Staff</h2>
 
-    <a href="dashboard.php" class="active">Dashboard</a>
+    <a href="dashboard.php"class="active">Dashboard</a>
     <a href="stock-list.php">Stock List</a>
     <a href="product-search.php">Product Search</a>
     <a href="stock-in.php">Stock In</a>
     <a href="stock-out.php">Stock Out</a>
+    <a href="stock-adjustment.php">Stock Adjustment</a>
     <a href="transaction-history.php">Transactions</a>
+    <a href="discrepancy-create.php" >Report Discrepancy</a>
+    <a href="my-discrepancy-reports.php" >My Reports</a>
     <a href="../../logout.php">Logout</a>
 
 </div>
