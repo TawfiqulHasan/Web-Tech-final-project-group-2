@@ -198,7 +198,7 @@ function cancelPO($id, $reason)
 {
     global $conn;
 
-    // append reason into notes instead of new column
+   
     $sql = "UPDATE purchase_orders
             SET status='cancelled',
                 notes = CONCAT(IFNULL(notes,''), ' | CANCELLED: ', ?)

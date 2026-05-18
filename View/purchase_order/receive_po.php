@@ -25,7 +25,7 @@ $rows = $items->fetch_all(MYSQLI_ASSOC);
     <h2>Receive Purchase Order</h2>
  
  
-<h2>Receive Purchase Order #<?= $po_id ?></h2>
+<h2>Receive Purchase Order <?= $po_id ?></h2>
  
 <form method="post" action="../../Controller/PurchaseOrderController.php">
  
@@ -45,11 +45,11 @@ $rows = $items->fetch_all(MYSQLI_ASSOC);
  
 <tr>
     <td>
-        <?= $row['product_id'] ?>
+        <?php echo $row['product_id'] ?>
         <input type="hidden" name="product_id[]" value="<?= $row['product_id'] ?>">
     </td>
  
-    <td><?= $row['ordered_qty'] ?></td>
+    <td><?php echo $row['ordered_qty'] ?></td>
  
     <td>
         <input type="number" name="received_qty[]" value="<?= $row['received_qty'] ?>">
@@ -83,10 +83,10 @@ $rows = $items->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <tr>
-    <td><?= $row['product_id'] ?></td>
-    <td><?= $row['ordered_qty'] ?></td>
-    <td><?= $row['received_qty'] ?></td>
-    <td><?= $remaining ?></td>
+    <td><?php echo $row['product_id'] ?></td>
+    <td><?php echo $row['ordered_qty'] ?></td>
+    <td><?php echo $row['received_qty'] ?></td>
+    <td><?php echo $remaining ?></td>
 </tr>
 
 <?php } ?>

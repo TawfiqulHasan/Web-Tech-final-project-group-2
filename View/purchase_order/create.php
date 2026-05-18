@@ -26,20 +26,20 @@ $products = fetchProducts();
 <select name="supplier_id" required>
     <option value="">Select Supplier</option>
     <?php while($s = $suppliers->fetch_assoc()) { ?>
-        <option value="<?= $s['id'] ?>">
-            <?= $s['company_name'] ?>
+        <option value="<?php echo $s['id'] ?>">
+            <?php echo $s['company_name'] ?>
         </option>
     <?php } ?>
 </select>
 
 <br><br>
 
-<!-- Product (simple single product for now) -->
+
 <select name="product_id" required>
     <option value="">Select Product</option>
     <?php while($p = $products->fetch_assoc()) { ?>
-        <option value="<?= $p['id'] ?>">
-            <?= $p['name'] ?>
+        <option value="<?php echo $p['id'] ?>">
+            <?php echo $p['name'] ?>
         </option>
     <?php } ?>
 </select>

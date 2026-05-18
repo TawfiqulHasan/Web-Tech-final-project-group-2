@@ -30,9 +30,9 @@ $products = getMostFrequentProducts();
 
 <?php while ($row = $spend->fetch_assoc()) { ?>
 <tr>
-    <td><?= $row['supplier_id'] ?></td>
-    <td><?= $row['month'] ?></td>
-    <td><?= $row['total_spend'] ?></td>
+    <td><?php echo $row['supplier_id'] ?></td>
+    <td><?php echo $row['month'] ?></td>
+    <td><?php echo $row['total_spend'] ?></td>
 </tr>
 <?php } ?>
 </table>
@@ -48,8 +48,8 @@ $products = getMostFrequentProducts();
 
 <?php while ($row = $lead->fetch_assoc()) { ?>
 <tr>
-    <td><?= $row['supplier_id'] ?></td>
-    <td><?= round($row['avg_lead_time'], 2) ?></td>
+    <td><?php echo $row['supplier_id'] ?></td>
+    <td><?php echo round($row['avg_lead_time'], 2) ?></td>
 </tr>
 <?php } ?>
 </table>
@@ -65,8 +65,8 @@ $products = getMostFrequentProducts();
 
 <?php while ($row = $products->fetch_assoc()) { ?>
 <tr>
-    <td><?= $row['product_id'] ?></td>
-    <td><?= $row['total_ordered'] ?></td>
+    <td><?php echo $row['product_id'] ?></td>
+    <td><?php echo $row['total_ordered'] ?></td>
 </tr>
 <?php } ?>
 </table>

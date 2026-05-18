@@ -29,42 +29,42 @@ $items = $itemsResult->fetch_assoc();
 
 <form method="post" action="../../Controller/PurchaseOrderController.php">
 
-<input type="hidden" name="po_id" value="<?= $po['id'] ?>">
+<input type="hidden" name="po_id" value="<?php echo $po['id'] ?>">
 
 Supplier ID:
-<input type="text" name="supplier_id" value="<?= $po['supplier_id'] ?>">
+<input type="text" name="supplier_id" value="<?php echo $po['supplier_id'] ?>">
 
 <br><br>
 
 Delivery Date:
-<input type="date" name="delivery_date" value="<?= $po['expected_delivery_date'] ?>">
+<input type="date" name="delivery_date" value="<?php echo $po['expected_delivery_date'] ?>">
 
 <br><br>
 
 Notes:
-<textarea name="notes"><?= $po['notes'] ?></textarea>
+<textarea name="notes"><?php echo $po['notes'] ?></textarea>
 
 <br><br>
 
 Product ID:
-<input type="text" name="product_id" value="<?= $items['product_id'] ?? '' ?>">
+<input type="text" name="product_id" value="<?php echo $items['product_id'] ?? '' ?>">
 
 <br><br>
 
 Quantity:
-<input type="number" name="qty" value="<?= $items['ordered_qty'] ?? '' ?>">
+<input type="number" name="qty" value="<?php echo $items['ordered_qty'] ?? '' ?>">
 
 <br><br>
 
 Unit Price:
-<input type="number" name="price" value="<?= $items['unit_price'] ?? '' ?>">
+<input type="number" name="price" value="<?php echo $items['unit_price'] ?? '' ?>">
 
 Status:
 <select name="status">
 
-    <option value="draft" <?= ($po['status'] == 'draft') ? 'selected' : '' ?>>Draft</option>
+    <option value="draft" <?php echo ($po['status'] == 'draft') ? 'selected' : '' ?>>Draft</option>
 
-    <option value="submitted" <?= ($po['status'] == 'submitted') ? 'selected' : '' ?>>Submitted</option>
+    <option value="submitted" <?php echo ($po['status'] == 'submitted') ? 'selected' : '' ?>>Submitted</option>
 
 </select>
 

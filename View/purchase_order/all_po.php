@@ -95,22 +95,22 @@ To:
 <?php while ($row = $result->fetch_assoc()) { ?>
 
 <tr>
-    <td><?= $row['id'] ?></td>
-    <td><?= $row['supplier_id'] ?></td>
-    <td><?= $row['status'] ?></td>
-    <td><?= $row['total_estimated_value'] ?></td>
+    <td><?php echo $row['id'] ?></td>
+    <td><?php echo $row['supplier_id'] ?></td>
+    <td><?php echo $row['status'] ?></td>
+    <td><?php echo $row['total_estimated_value'] ?></td>
 
     <td>
 
-    <a href="edit_po.php?id=<?= $row['id'] ?>">Edit</a>
+    <a href="edit_po.php?id=<?php echo $row['id'] ?>">Edit</a>
 
-    <a href="receive_po.php?id=<?= $row['id'] ?>">Receive</a>
+    <a href="receive_po.php?id=<?php echo $row['id'] ?>">Receive</a>
 
     <?php if ($row['status'] == 'draft' || $row['status'] == 'submitted' || $row['status'] == 'approved') { ?>
 
         <form method="post" action="../../Controller/PurchaseOrderController.php" style="display:inline;">
 
-            <input type="hidden" name="po_id" value="<?= $row['id'] ?>">
+            <input type="hidden" name="po_id" value="<?php echo $row['id'] ?>">
 
             <input type="text" name="reason" placeholder="Cancel reason" required>
 
@@ -125,7 +125,7 @@ To:
 
     <?php if ($row['status'] == 'draft') { ?>
 
-        <a href="../../Controller/PurchaseOrderController.php?delete=<?= $row['id'] ?>"
+        <a href="../../Controller/PurchaseOrderController.php?delete=<?php echo $row['id'] ?>"
            onclick="return confirm('Delete this draft?')">
            Delete
         </a>

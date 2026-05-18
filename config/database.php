@@ -1,8 +1,8 @@
 <?php
-$host = "127.0.0.1";   // database server
-$user = "root";        // database username
-$pass = "";            // database password
-$dbname = "stock_management"; // database name
+$host = "127.0.0.1";   
+$user = "root";        
+$pass = "";            
+$dbname = "stock_management"; 
 
 $conn = new mysqli($host, $user, $pass, $dbname,3309);
 

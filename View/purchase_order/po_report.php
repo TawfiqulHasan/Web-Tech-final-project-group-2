@@ -54,11 +54,11 @@ To Date:
 <?php while ($row = $result->fetch_assoc()) { ?>
 
 <tr>
-    <td><?= $row['id'] ?></td>
-    <td><?= $row['supplier_id'] ?></td>
-    <td><?= $row['status'] ?></td>
-    <td><?= $row['total_estimated_value'] ?></td>
-    <td><?= $row['created_at'] ?></td>
+    <td><?php echo $row['id'] ?></td>
+    <td><?php echo $row['supplier_id'] ?></td>
+    <td><?php echo $row['status'] ?></td>
+    <td><?php echo $row['total_estimated_value'] ?></td>
+    <td><?php echo $row['created_at'] ?></td>
 </tr>
 
 <?php } ?>
