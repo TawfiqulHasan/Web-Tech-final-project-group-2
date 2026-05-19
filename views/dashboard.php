@@ -133,6 +133,11 @@
         <a href="../controllers/WarehouseController.php?action=list">Warehouses</a>
         <a href="../controllers/POController.php?action=list">PO</a>
         <a href="../controllers/InventoryController.php?action=list">Inventory</a>
+        <a href="../controllers/DiscrepancyController.php?action=list" style="color:white; margin-right :15px;">Discrepancy</a>
+         <a href="../controllers/StockMovementController.php?action=list" style="color:white; margin-right :15px;">Stock Report</a>
+          <a href="../controllers/LowStockController.php?action=list" style="color:white; margin-right:15px;">Low Stock</a> 
+          <a href="../controllers/SupplierReportController.php?action=list" style="color:white; margin-right:15px;">SupplierReport</a>
+           <a href="../controllers/MonthlyAuditController.php?action=list" style="color:white; margin-right:15px;">MonthlyAudit</a>
         <a href="../controllers/logincontroller.php">Logout</a>
     </div>
 </div>
