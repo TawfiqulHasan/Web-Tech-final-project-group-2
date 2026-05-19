@@ -1,0 +1,29 @@
+body{
+    font-family: Arial, sans-serif;
+    background-color: #eef2f7;
+    margin: 0;
+    padding: 0;
+}
+
+.error{
+    color: red;
+}
+
+.success{
+    color: green;
+}
+
+input[type="submit"],
+button{
+    background-color: #5c7cfa;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover,
+button:hover{
+    background-color: #4c6ef5;
+}
