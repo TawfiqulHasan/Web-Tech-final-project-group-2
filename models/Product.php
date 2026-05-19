@@ -8,7 +8,6 @@ class Product {
         $this->conn = $conn;
     }
 
-    
     public function getAll() {
 
         $sql = "SELECT products.*, categories.name AS category_name
@@ -18,9 +17,7 @@ class Product {
 
         return mysqli_query($this->conn, $sql);
     }
-
-    
-    public function getById($id) {
+public function getById($id) {
 
         $sql = "SELECT * FROM products WHERE id=$id";
 
@@ -53,12 +50,11 @@ class Product {
         return mysqli_query($this->conn, $sql);
     }
 
-
-        public function delete($id) {
+ public function delete($id) {
 
     $sql = "DELETE FROM products WHERE id=$id";
 
-    return mysqli_query($this->conn, $sql);
+return mysqli_query($this->conn, $sql);
 }
 
 }
